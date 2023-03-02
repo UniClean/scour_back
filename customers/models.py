@@ -28,3 +28,10 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CustomerImage(models.Model):
+    image = models.ImageField(upload_to='customer_images')
+
+    def __str__(self):
+        return self.image_url
