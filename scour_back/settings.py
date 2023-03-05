@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'customers',
     'objects',
-    'orders'
+    'orders',
+    'employees',
 ]
 
 MIDDLEWARE = [
