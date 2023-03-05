@@ -26,13 +26,15 @@ class Order(models.Model):
     object_id = models.ForeignKey(object_models.Object, on_delete=models.CASCADE)
     type = models.CharField(max_length=100, choices=[(tag.name, tag.value) for tag in CleaningOrderType])
     status = models.CharField(max_length=100, choices=[(tag.name, tag.value) for tag in CleaningOrderStatus])
+    additional_information = models.TextField(blank=True, null=True)
+    accept_time = models.DateTimeField(null=True)
+    completed_time = models.DateTimeField(null=True)
+    supervisor_comments = models.TextField(blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
     deleted_date = models.DateTimeField(blank=True, null=True)
-
-    additional_information = models.TextField(blank=True, null=True)
 
     # deleted_by = models.ForeignKey(
     #     settings.AUTH_USER_MODEL,
