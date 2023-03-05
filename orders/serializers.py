@@ -5,6 +5,7 @@ from objects.serializers import ObjectSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
     object = ObjectSerializer(source='object_id', many=False, read_only=True)
+
     class Meta:
         model = Order
         exclude = ('object_id',)

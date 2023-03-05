@@ -6,7 +6,7 @@ from rest_framework import status
 
 
 class ObjectList(generics.ListCreateAPIView):
-    queryset = Object.objects.all()
+    queryset = Object.objects.filter(deleted=False)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -30,3 +30,20 @@ class ObjectList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ObjectDetail(generics.RetrieveAPIView):
+    queryset = Object.objects.all()
+    serializer_class = ObjectSerializer
+    lookup_field = 'id'
+
+
+class ObjectUpdate(generics.UpdateAPIView):
+    queryset = Object.objects.all()
+    serializer_class = ObjectCreateSerializer
+    lookup_field = 'id'
+
+
+class ObjectDestroy(generics.DestroyAPIView):
+    queryset = Object.objects.all()
+    lookup_field = 'id'
