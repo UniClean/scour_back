@@ -6,7 +6,7 @@ from rest_framework import status
 
 
 class EmployeeList(generics.ListCreateAPIView):
-    queryset = Employee.objects.all()
+    queryset = Employee.objects.filter(deleted=False)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -32,8 +32,25 @@ class EmployeeList(generics.ListCreateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class EmployeeDetail(generics.RetrieveAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    lookup_field = 'id'
+
+
+class EmployeeUpdate(generics.UpdateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeCreateSerializer
+    lookup_field = 'id'
+
+
+class EmployeeDestroy(generics.DestroyAPIView):
+    queryset = Employee.objects.all()
+    lookup_field = 'id'
+
+
 class PositionList(generics.ListCreateAPIView):
-    queryset = Position.objects.all()
+    queryset = Position.objects.filter(deleted=False)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -57,3 +74,20 @@ class PositionList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PositionDetail(generics.RetrieveAPIView):
+    queryset = Position.objects.all()
+    serializer_class = PositionSerializer
+    lookup_field = 'id'
+
+
+class PositionUpdate(generics.UpdateAPIView):
+    queryset = Position.objects.all()
+    serializer_class = PositionCreateSerializer
+    lookup_field = 'id'
+
+
+class PositionDestroy(generics.DestroyAPIView):
+    queryset = Position.objects.all()
+    lookup_field = 'id'

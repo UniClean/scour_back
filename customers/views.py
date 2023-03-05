@@ -6,7 +6,7 @@ from rest_framework import status
 
 
 class CustomerList(generics.ListCreateAPIView):
-    queryset = Customer.objects.all()
+    queryset = Customer.objects.filter(deleted=False)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -30,3 +30,20 @@ class CustomerList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomerDetail(generics.RetrieveAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    lookup_field = 'id'
+
+
+class CustomerUpdate(generics.UpdateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerCreateSerializer
+    lookup_field = 'id'
+
+
+class CustomerDestroy(generics.DestroyAPIView):
+    queryset = Customer.objects.all()
+    lookup_field = 'id'

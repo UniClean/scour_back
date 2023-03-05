@@ -8,7 +8,7 @@ from rest_framework import status
 
 
 class OrderList(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
+    queryset = Order.objects.filter(deleted=False)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -32,10 +32,20 @@ class OrderList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# Create your views here.
 
 
-class OrderDetailView(generics.RetrieveAPIView):
+class OrderDetail(generics.RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    lookup_field = 'id'
+
+
+class OrderUpdate(generics.UpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderCreateSerializer
+    lookup_field = 'id'
+
+
+class OrderDestroy(generics.DestroyAPIView):
+    queryset = Order.objects.all()
     lookup_field = 'id'
