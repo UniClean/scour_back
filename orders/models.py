@@ -31,6 +31,9 @@ class Order(models.Model):
     completed_time = models.DateTimeField(null=True)
     supervisor_comments = models.TextField(blank=True, null=True)
 
+    report_deadline = models.DateTimeField(blank=True, null=True)
+    start_when = models.DateTimeField(blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
